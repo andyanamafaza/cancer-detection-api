@@ -1,6 +1,7 @@
 const predictClassification = require('../services/inferenceService');
 const crypto = require('crypto');
 const storeData = require('../services/storeData');
+const { Firestore } = require('@google-cloud/firestore');
 
 async function postPredictHandler(request, h) {
     const { image } = request.payload;
@@ -22,14 +23,14 @@ async function postPredictHandler(request, h) {
 
     const response = h.response({
         status: 'success',
-        message: 'Gambar berhasil diprediksi',
+        message: 'Model is predicted successfully',
         data: data
     })
     response.code(201);
     return response;
-/*
-* Akan diisi setelah membuat logika inferensi machine learning.
-*/
+    /*
+    * Akan diisi setelah membuat logika inferensi machine learning.
+    */
 }
 
 const getPredictHistoriesHandler = async (request, h) => {

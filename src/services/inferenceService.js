@@ -25,7 +25,7 @@ async function predictClassification(model, image) {
 
         return { result, suggestion };
     } catch (error) {
-        throw new InputError("Terjadi kesalahan: ${error.message}");
+        throw new InputError(`Terjadi kesalahan: ${error.message}`);
     }
 
     // const suggestion = "Segera periksa ke dokter!";

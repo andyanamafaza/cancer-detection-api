@@ -26,7 +26,7 @@ const InputError = require('../exceptions/InputError');
             const statusCode = response instanceof InputError ? response.statusCode : response.output.statusCode;
             const newResponse = h.response({
                 status: 'fail',
-                message: response.message,
+                message: 'Terjadi kesalahan dalam melakukan prediksi',
             });
             newResponse.code(parseInt(statusCode)); // Ensure statusCode is parsed as an integer
             return newResponse;
