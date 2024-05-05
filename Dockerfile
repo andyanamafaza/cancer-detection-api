@@ -8,9 +8,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production
+RUN npm install --only=prod
 
-# Copy the rest of the application
+# Copy the rest of the application code
 COPY . .
 
 # Expose the port the app runs on

@@ -11,11 +11,13 @@ const routes = [
                 multipart: true,
                 maxBytes: 1048576
             }
-        },
+        }
+    },
+    {
         path: '/predict/histories',
         method: 'GET',
         handler: getPredictHistoriesHandler
     }
-]
+];
 
 module.exports = routes;
