@@ -18,12 +18,11 @@ const InputError = require('../exceptions/InputError');
     server.app.model = model;
 
     server.route(routes);
-
-    // Handle errors related to payload size exceeding maximum allowed
+    
     server.ext('onPreResponse', function (request, h) {
         const response = request.response;
 
-        if (response.isBoom && response.output.statusCode === 413) { // Check if it's a payload too large error
+        if (response.isBoom && response.output.statusCode === 413) { 
             const newResponse = h.response({
                 status: 'fail',
                 message: 'Payload content length greater than maximum allowed: 1000000',

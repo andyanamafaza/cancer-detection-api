@@ -27,20 +27,6 @@ async function predictClassification(model, image) {
     } catch (error) {
         throw new InputError(`Terjadi kesalahan: ${error.message}`);
     }
-
-    // const suggestion = "Segera periksa ke dokter!";
-    // const createdAt = new Date().toISOString();
-
-    // return {
-    //     status: "success",
-    //     message: "Model is predicted successfully",
-    //     data: {
-    //         id,
-    //         result,
-    //         suggestion,
-    //         createdAt
-    //     }
-    // };
 }
 
 module.exports = predictClassification;
