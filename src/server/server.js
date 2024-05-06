@@ -19,8 +19,18 @@ const InputError = require('../exceptions/InputError');
 
     server.route(routes);
 
+    // Handle errors related to payload size exceeding maximum allowed
     server.ext('onPreResponse', function (request, h) {
         const response = request.response;
+
+        if (response.isBoom && response.output.statusCode === 413) { // Check if it's a payload too large error
+            const newResponse = h.response({
+                status: 'fail',
+                message: 'Payload content length greater than maximum allowed: 1000000',
+            });
+            newResponse.code(413);
+            return newResponse;
+        }
 
         if (response instanceof InputError || response.isBoom) {
             const statusCode = response instanceof InputError ? response.statusCode : response.output.statusCode;
@@ -28,7 +38,7 @@ const InputError = require('../exceptions/InputError');
                 status: 'fail',
                 message: 'Terjadi kesalahan dalam melakukan prediksi',
             });
-            newResponse.code(parseInt(statusCode)); // Ensure statusCode is parsed as an integer
+            newResponse.code(parseInt(statusCode));
             return newResponse;
         }
 

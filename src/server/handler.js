@@ -7,7 +7,6 @@ async function postPredictHandler(request, h) {
     const { image } = request.payload;
     const { model } = request.server.app;
 
-    // const { result, suggestion } = await predictClassification(model, image._data);
     const { result, suggestion } = await predictClassification(model, image);
     const id = crypto.randomUUID();
     const createdAt = new Date().toISOString();
@@ -28,9 +27,6 @@ async function postPredictHandler(request, h) {
     })
     response.code(201);
     return response;
-    /*
-    * Akan diisi setelah membuat logika inferensi machine learning.
-    */
 }
 
 const getPredictHistoriesHandler = async (request, h) => {
@@ -38,19 +34,22 @@ const getPredictHistoriesHandler = async (request, h) => {
     const predictCollection = db.collection('prediction');
     const snapshot = await predictCollection.get();
 
-    const histories = [];
+    const data = [];
     snapshot.forEach((doc) => {
-        histories.push(doc.data());
+        const history = {
+            id: doc.id,
+            history: doc.data()
+        };
+        data.push(history);
     });
 
     const response = h.response({
         status: 'success',
-        data: {
-            histories
-        }
+        data: data
     });
     response.code(200);
     return response;
 }
+
 
 module.exports = { postPredictHandler, getPredictHistoriesHandler };
